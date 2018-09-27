@@ -28,19 +28,7 @@ public class RegisterEnrollUser {
         adminUserContext.setMspId(Config.ORG1_MSP);
         client.setAdminUserContext(adminUserContext);
         adminUserContext=client.enrollAdminUser(Config.ADMIN,Config.ADMIN_PASSWORD);
-        
-     // Register and Enroll user to Org1MSP
-     			UserContext userContext = new UserContext();
-     			String name = "user"+System.currentTimeMillis();
-     			userContext.setName(name);
-     			userContext.setAffiliation(Config.ORG1);
-     			userContext.setMspId(Config.ORG1_MSP);
-
-     			String eSecret = client.registerUser(name, Config.ORG1);
-
-     			userContext = client.enrollUser(userContext, eSecret);
-
-        
+           
 		}
 		catch(Exception e)
 		{

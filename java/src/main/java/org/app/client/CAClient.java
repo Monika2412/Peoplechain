@@ -69,18 +69,5 @@ public class CAClient {
 
 	    }
 	    
-	    public String registerUser(String username, String organization) throws Exception 
-	    {
-			UserContext userContext = Util.readUserContext(adminContext.getAffiliation(), username);
-			if (userContext != null) {
-				Logger.getLogger(CAClient.class.getName()).log(Level.WARNING, "CA -" + caUrl +" User " + username+ " is already registered.");
-				return null;
-			}
-			RegistrationRequest rr = new RegistrationRequest(username, organization);
-			String enrollmentSecret = client.register(rr, adminContext);
-			Logger.getLogger(CAClient.class.getName()).log(Level.INFO, "CA -" + caUrl + " Registered User - " + username);
-			return enrollmentSecret;
-	    }
-
-
+	   
 }
