@@ -1,0 +1,8 @@
+org/app/user/CAEnrollment.class
+org/app/util/Util.class
+org/app/network/CreateChannel.class
+org/app/client/FabricClient.class
+org/app/client/CAClient.class
+org/app/config/Config.class
+org/app/user/RegisterEnrollUser.class
+org/app/user/UserContext.class
