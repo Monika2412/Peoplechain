@@ -1,3 +1,15 @@
+/****************************************************** 
+ *  Copyright 2018 IBM Corporation 
+ *  Licensed under the Apache License, Version 2.0 (the "License"); 
+ *  you may not use this file except in compliance with the License. 
+ *  You may obtain a copy of the License at 
+ *  http://www.apache.org/licenses/LICENSE-2.0 
+ *  Unless required by applicable law or agreed to in writing, software 
+ *  distributed under the License is distributed on an "AS IS" BASIS, 
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ *  See the License for the specific language governing permissions and 
+ *  limitations under the License.
+ */ 
 package org.app.user;
 
 import java.io.Serializable;
@@ -6,75 +18,75 @@ import java.util.Set;
 import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.User;
 
-public class UserContext implements User,Serializable{
+/**
+ * Implementation class for User
+ * 
+ * @author Balaji Kadambi
+ *
+ */
+
+public class UserContext implements User, Serializable {
 	
-	private static final long serialVersionId=1L;
-    protected String name;
-    protected String affiliation;
-    protected String account;
-    protected String mspId;
-    protected Enrollment enrollment;
-    protected Set<String> roles;
+	private static final long serialVersionUID = 1L;
+	protected String name;
+	protected Set<String> roles;
+	protected String account;
+	protected String affiliation;
+	protected Enrollment enrollment;
+	protected String mspId;
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name)
-    {
-        this.name=name;
-    }
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
+	}
 
-    public String getName()
-    {
-        return name;
-    }
+	public void setAccount(String account) {
+		this.account = account;
+	}
 
-    public void setAffiliation(String affiliation)
-    {
-        this.affiliation=affiliation;
-    }
+	public void setAffiliation(String affiliation) {
+		this.affiliation = affiliation;
+	}
 
-    public String getAffiliation()
-    {
-        return affiliation;
-    }
+	public void setEnrollment(Enrollment enrollment) {
+		this.enrollment = enrollment;
+	}
 
-    public void setAccount(String account)
-    {
-        this.account=account;
-    }
+	public void setMspId(String mspId) {
+		this.mspId = mspId;
+	}
 
-    public String getAccount()
-    {
-        return account;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    public void setMspId(String mspId)
-    {
-        this.mspId=mspId;
-    }
+	@Override
+	public Set<String> getRoles() {
+		return roles;
+	}
 
-    public String getMspId()
-    {
-        return mspId;
-    }
+	@Override
+	public String getAccount() {
+		return account;
+	}
 
-    public void setEnrollment(Enrollment enrollment)
-    {
-        this.enrollment=enrollment;
-    }
+	@Override
+	public String getAffiliation() {
+		return affiliation;
+	}
 
-    public Enrollment getEnrollment()
-    {
-        return enrollment;
-    }
+	@Override
+	public Enrollment getEnrollment() {
+		return enrollment;
+	}
 
-    public void setRoles(Set<String> roles)
-    {
-        this.roles=roles;
-    }
-
-    public Set<String> getRoles()
-    {
-        return roles;
-    }
-
+	@Override
+	public String getMspId() {
+		return mspId;
+	}
 
 }

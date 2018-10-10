@@ -2,7 +2,12 @@
 /home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/user/UserContext.java
 /home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/client/CAClient.java
 /home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/util/Util.java
-/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/user/RegisterEnrollUser.java
-/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/client/FabricClient.java
+/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/chaincode/invocation/InvokeQueryChaincode.java
 /home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/network/CreateChannel.java
 /home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/user/CAEnrollment.java
+/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/chaincode/invocation/InvokeChaincode.java
+/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/chaincode/invocation/QueryChaincode.java
+/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/client/ChannelClient.java
+/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/user/RegisterEnrollUser.java
+/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/client/FabricClient.java
+/home/administrator/eclipse-workspace/Peoplechain/java/src/main/java/org/app/network/DeployInstantiateChaincode.java

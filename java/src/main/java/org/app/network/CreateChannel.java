@@ -1,4 +1,3 @@
-
 package org.app.network;
 
 import java.io.File;
@@ -60,10 +59,10 @@ public class CreateChannel {
 			Channel mychannel = fabClient.getInstance().newChannel(Config.CHANNEL_NAME, orderer, channelConfiguration,
 					channelConfigurationSignatures);
 
-			Peer peer0_org1 = fabClient.getInstance().newPeer(Config.PEER0_ORG1, Config.PEER0_ORG1_URL);
-			Peer peer1_org1 = fabClient.getInstance().newPeer(Config.PEER1_ORG1, Config.PEER1_ORG1_URL);
-			Peer peer0_org2 = fabClient.getInstance().newPeer(Config.PEER0_ORG2, Config.PEER0_ORG2_URL);
-			Peer peer1_org2 = fabClient.getInstance().newPeer(Config.PEER1_ORG2, Config.PEER1_ORG2_URL);
+			Peer peer0_org1 = fabClient.getInstance().newPeer(Config.ORG1_PEER_0, Config.ORG1_PEER_0_URL);
+			Peer peer1_org1 = fabClient.getInstance().newPeer(Config.ORG1_PEER_1, Config.ORG1_PEER_1_URL);
+			Peer peer0_org2 = fabClient.getInstance().newPeer(Config.ORG2_PEER_0, Config.ORG2_PEER_0_URL);
+			Peer peer1_org2 = fabClient.getInstance().newPeer(Config.ORG2_PEER_1, Config.ORG2_PEER_1_URL);
 
 			mychannel.joinPeer(peer0_org1);
 			mychannel.joinPeer(peer1_org1);
@@ -92,4 +91,3 @@ public class CreateChannel {
 	}
 
 }
-

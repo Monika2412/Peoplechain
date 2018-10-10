@@ -1,3 +1,4 @@
+
 package org.app.util;
 
 import java.io.BufferedReader;
@@ -24,100 +25,89 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.app.user.CAEnrollment;
 import org.app.user.UserContext;
-
 import org.hyperledger.fabric.sdk.exception.CryptoException;
 
+
 public class Util {
+
+	public static void writeUserContext(UserContext userContext) throws Exception {
+		String directoryPath = "users/" + userContext.getAffiliation();
+		String filePath = directoryPath + "/" + userContext.getName() + ".ser";
+		File directory = new File(directoryPath);
+		if (!directory.exists())
+			directory.mkdirs();
+
+		FileOutputStream file = new FileOutputStream(filePath);
+		ObjectOutputStream out = new ObjectOutputStream(file);
+
+		// Method for serialization of object
+		out.writeObject(userContext);
+
+		out.close();
+		file.close();
+	}
+
+	public static UserContext readUserContext(String affiliation, String username) throws Exception {
+		String filePath = "users/" + affiliation + "/" + username + ".ser";
+		File file = new File(filePath);
+		if (file.exists()) {
+			// Reading the object from a file
+			FileInputStream fileStream = new FileInputStream(filePath);
+			ObjectInputStream in = new ObjectInputStream(fileStream);
+
+			// Method for deserialization of object
+			UserContext uContext = (UserContext) in.readObject();
+
+			in.close();
+			fileStream.close();
+			return uContext;
+		}
+
+		return null;
+	}
+
 	
-	 //Serialize user
-    public static void writeUserContext(UserContext userContext) throws Exception
-    {
-        String directoryPath="users/"+userContext.getAffiliation();
-        String filePath=directoryPath+"/"+userContext.getName()+".ser";
-        File directory=new File(directoryPath);
-        if(!directory.exists())
-        {
-            directory.mkdirs();
-        }
-        FileOutputStream file=new FileOutputStream(filePath);
-        ObjectOutputStream out=new ObjectOutputStream(file);
+	public static CAEnrollment getEnrollment(String keyFolderPath,  String keyFileName,  String certFolderPath, String certFileName)
+			throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, CryptoException {
+		PrivateKey key = null;
+		String certificate = null;
+		InputStream isKey = null;
+		BufferedReader brKey = null;
 
-        //Method for serialization of object
-        out.writeObject(userContext);
+		try {
 
-        out.close();
-        file.close();
-    }
+			isKey = new FileInputStream(keyFolderPath + File.separator + keyFileName);
+			brKey = new BufferedReader(new InputStreamReader(isKey));
+			StringBuilder keyBuilder = new StringBuilder();
 
-    //Deserialize user
-    public static UserContext readUserContext(String affiliation,String userName) throws Exception
-    {
-        String filePath="users/"+affiliation+"/"+userName+".ser";
-        File file=new File(filePath);
+			for (String line = brKey.readLine(); line != null; line = brKey.readLine()) {
+				if (line.indexOf("PRIVATE") == -1) {
+					keyBuilder.append(line);
+				}
+			}
 
-        if(file.exists())
-        {
-            //Reading object from file
-            FileInputStream inputStream=new FileInputStream(filePath);
-            ObjectInputStream in=new ObjectInputStream(inputStream);
+			certificate = new String(Files.readAllBytes(Paths.get(certFolderPath, certFileName)));
 
-            //method for deserialize
-            UserContext userContext=(UserContext) in.readObject();
+			byte[] encoded = DatatypeConverter.parseBase64Binary(keyBuilder.toString());
+			PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
+			KeyFactory kf = KeyFactory.getInstance("ECDSA");
+			key = kf.generatePrivate(keySpec);
+		} finally {
+			isKey.close();
+			brKey.close();
+		}
 
-            in.close();
-            inputStream.close();
-            return userContext;
-        }
-        return null;
-    }
-    
-    //Get enrollment
-    public static CAEnrollment getEnrollment(String keyFolderPath,String keyFileName,String certFolderPath,String certFileName) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, CryptoException
-    {
-    	PrivateKey key=null;
-    	String certificate=null;
-    	InputStream isKey=null;
-    	BufferedReader brKey=null;
-    	try
-    	{
-    	    isKey=new FileInputStream(keyFolderPath+File.separator+keyFileName);
-    	    brKey=new BufferedReader(new InputStreamReader(isKey));
-    	    StringBuilder keyBuilder=new StringBuilder();
-    	    
-    	    for(String line=brKey.readLine();line!=null;line=brKey.readLine())
-    	    {
-    	    	if(line.indexOf("PRIVATE")==-1)
-    	    	{
-    	    		keyBuilder.append(line);
-    	    	}
-    	    }
-    	    certificate=new String(Files.readAllBytes(Paths.get(certFolderPath,certFileName)));
-    	    byte[] encoded=DatatypeConverter.parseBase64Binary(keyBuilder.toString());
-    	    PKCS8EncodedKeySpec keySpec=new PKCS8EncodedKeySpec(encoded);
-    	    KeyFactory kf=KeyFactory.getInstance("ECDSA");
-    	    key=kf.generatePrivate(keySpec);
-    	}
-    	finally
-    	{
-    		isKey.close();
-    		brKey.close();
-    	}
-    	
-    	CAEnrollment enrollment=new CAEnrollment(key,certificate);
-    	return enrollment;
-    	
-    }
-
-    public static void cleanUp()
-    {
-        String directoryPath="users";
-        File directory=new File(directoryPath);
-        deleteDirectory(directory);
-
-    }
-
-    //Clean the network
-    public static boolean deleteDirectory(File dir) {
+		CAEnrollment enrollment = new CAEnrollment(key, certificate);
+		return enrollment;
+	}
+	
+	public static void cleanUp() {
+		String directoryPath = "users";
+		File directory = new File(directoryPath);
+		deleteDirectory(directory);
+	}
+	
+	  public static boolean deleteDirectory(File dir) {
 	        if (dir.isDirectory()) {
 	            File[] children = dir.listFiles();
 	            for (int i = 0; i < children.length; i++) {
@@ -127,9 +117,10 @@ public class Util {
 	                }
 	            }
 	        }
-            // either file or an empty directory
+
+	        // either file or an empty directory
 	        Logger.getLogger(Util.class.getName()).log(Level.INFO, "Deleting - " + dir.getName());
 	        return dir.delete();
-    }
+	    }
 
 }
